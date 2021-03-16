@@ -11,6 +11,7 @@ CREATE TABLE public.member
     salary numeric,
     invest_amt numeric,
     withdraw_amt numeric,
+    username character varying(255) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "Member_pkey" PRIMARY KEY (id),
     CONSTRAINT mem_info_unique UNIQUE (email, phone)
 )

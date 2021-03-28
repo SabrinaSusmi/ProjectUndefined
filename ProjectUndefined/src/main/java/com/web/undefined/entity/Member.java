@@ -1,9 +1,15 @@
 package com.web.undefined.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="member", schema ="public")
@@ -13,20 +19,29 @@ public class Member {
 	@Column(name="id")
 	private String id;
 	
+	@NotEmpty
 	@Column(name="name")
 	private String name;
 	
+	@NotEmpty
 	@Column(name="username")
 	private String username;
 	
+	@NotEmpty
+	@Size(min=5)
 	@Column(name="password")
 	private String password;
 	
+	@NotEmpty
 	@Column(name="phone")
 	private String phone;
 	
+	@NotEmpty
 	@Column(name="address")
 	private String address;
+	
+	@OneToMany(mappedBy="member",cascade=CascadeType.ALL)
+	private List<Investment> investments;
 
 	public Member(String name, String username, String password, String phone, String address) {
 		this.name = name;
@@ -88,8 +103,13 @@ public class Member {
 		this.address = address;
 	}
 
-	
-	
+	public List<Investment> getInvestments() {
+		return investments;
+	}
+
+	public void setInvestments(List<Investment> investments) {
+		this.investments = investments;
+	}
 	
 	
 }

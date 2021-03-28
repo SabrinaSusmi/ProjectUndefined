@@ -7,7 +7,7 @@ CREATE TABLE public.member
     phone character varying(15) COLLATE pg_catalog."default" NOT NULL,
     password character varying(255) COLLATE pg_catalog."default" NOT NULL,
     address character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    dob date NOT NULL,
+    dob date,
     salary numeric,
     invest_amt numeric,
     withdraw_amt numeric,
@@ -21,15 +21,63 @@ TABLESPACE pg_default;
 ALTER TABLE public.member
     OWNER to postgres;
 
+-- Trigger: mem_id_trg
+
+-- DROP TRIGGER mem_id_trg ON public.member;
+
+CREATE TRIGGER mem_id_trg
+    BEFORE INSERT
+    ON public.member
+    FOR EACH ROW
+    EXECUTE PROCEDURE public.mem_id_fn();
+
+
+----------fn
+CREATE FUNCTION public.mem_id_fn()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+declare
+
+selected_id member.id%type;
+c_date character varying(9);
+id_serial numeric;
+m_id member.id%type;
+
+begin
+--if tg_op = 'insert'  then
+
+select max(id) from member into selected_id;
+select to_char(current_date,'ddmmyyyy') into c_date;
+
+if(selected_id is NULL) then
+m_id = 'Mem'||c_date||'8001';
+else
+select right(selected_id,4) into id_serial;
+id_serial=id_serial+1;
+m_id = 'Mem'||c_date||id_serial;
+end if;
+
+new.id=m_id;
+--end if;
+return new;
+end;
+$BODY$;
+
+ALTER FUNCTION public.mem_id_fn()
+    OWNER TO postgres;
+
 
 -------------------------------Investment
 CREATE TABLE public.investment_records
 (
-    id character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL DEFAULT nextval('investment_records_id_seq'::regclass),
     mem_id character varying(20) COLLATE pg_catalog."default" NOT NULL,
     given_amt numeric NOT NULL,
-    given_date date NOT NULL,
-    CONSTRAINT inv_rec_pkey PRIMARY KEY (id),
+    given_date date,
+    CONSTRAINT invs_rec_pkey PRIMARY KEY (id),
     CONSTRAINT inv_mem_fk FOREIGN KEY (mem_id)
         REFERENCES public.member (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -45,10 +93,10 @@ ALTER TABLE public.investment_records
 ---------------------------------Withdraw
 CREATE TABLE public.withdraw_records
 (
-    id character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL DEFAULT nextval('withdraw_records_id_seq'::regclass),
     mem_id character varying(20) COLLATE pg_catalog."default" NOT NULL,
     amt numeric NOT NULL,
-    wtdr_date date NOT NULL,
+    wtdr_date date,
     CONSTRAINT "Withdraw_records_pkey" PRIMARY KEY (id),
     CONSTRAINT wtdr_mem_fk FOREIGN KEY (mem_id)
         REFERENCES public.member (id) MATCH SIMPLE

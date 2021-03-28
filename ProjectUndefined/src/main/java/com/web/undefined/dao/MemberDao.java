@@ -2,7 +2,10 @@ package com.web.undefined.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -32,4 +35,18 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public void findAll() throws ClassNotFoundException, SQLException {
+		Connection conn = PostgresConnectionUtils.getDBConnection();
+		
+		List<Member> member = new ArrayList<>();
+		String sql = "select * from member";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			//member.add(rs.ge)
+		}
+	}
+	
 }

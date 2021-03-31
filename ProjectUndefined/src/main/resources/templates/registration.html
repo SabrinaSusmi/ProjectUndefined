@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Register</title>
+<link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}" />
+<script
+      src="https://kit.fontawesome.com/00fb7c4cdb.js"
+      crossorigin="anonymous"
+    ></script>
 </head>
 <body>
+<div th:replace="fragments/sidebar.html::sidebar"></div>
+<div class="main-body">
 Register here!!!
 <form action=# th:action="@{/registered}" method="post">
 <input type="text" name="name" placeholder="name"/>
@@ -14,5 +20,6 @@ Register here!!!
 <input type="text" name="address" placeholder="address"/>
 <input type="submit" value="submit" />
 </form>
+</div>
 </body>
 </html>

@@ -14,8 +14,8 @@ import com.web.undefined.dao.MemberDao;
 import com.web.undefined.entity.Member;
 import com.web.undefined.repository.MemberRepository;
 
-@RestController
-@RequestMapping("api/")
+@Controller
+//@RequestMapping("api/")
 public class LoginController {
 	
 	@Autowired
@@ -24,7 +24,7 @@ public class LoginController {
 	@Autowired
 	MemberDao dao;
 	
-//	@RequestMapping("/")
+//	@RequestMapping("/register")
 //	public String goToRegister() {
 //		return "registration.html";
 //	}

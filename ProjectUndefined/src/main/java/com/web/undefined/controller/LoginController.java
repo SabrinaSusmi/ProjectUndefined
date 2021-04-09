@@ -14,32 +14,30 @@ import com.web.undefined.dao.MemberDao;
 import com.web.undefined.entity.Member;
 import com.web.undefined.repository.MemberRepository;
 
-@Controller
-//@RequestMapping("api/")
+//@Controller
+////@RequestMapping("api/")
 public class LoginController {
-	
-	@Autowired
-	MemberRepository memberRepo;
-	
-	@Autowired
-	MemberDao dao;
-	
-//	@RequestMapping("/register")
-//	public String goToRegister() {
-//		return "registration.html";
+//	
+//	
+//	@Autowired
+//	MemberDao dao;
+//	
+////	@RequestMapping("/register")
+////	public String goToRegister() {
+////		return "registration.html";
+////	}
+//	
+//	@RequestMapping("/registered")
+//	public String register(@RequestParam String name, String username, String password, String address, String phone) throws ClassNotFoundException, SQLException {
+//		Member m = new Member(name,username,password,phone,address);
+//		dao.save(m);
+//		
+//		return "login.html";
 //	}
-	
-	@RequestMapping("/registered")
-	public String register(@RequestParam String name, String username, String password, String address, String phone) throws ClassNotFoundException, SQLException {
-		Member m = new Member(name,username,password,phone,address);
-		dao.save(m);
-		
-		return "login.html";
-	}
-	
-	@GetMapping("getmember")
-	public List<Member> getAllMem() {
-		return this.memberRepo.findAll();
-	}
-
+//	
+////	@GetMapping("getmember")
+////	public List<Member> getAllMem() {
+////		return this.memberRepo.findAll();
+////	}
+//
 }

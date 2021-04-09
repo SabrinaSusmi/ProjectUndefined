@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.web.undefined.entity.Member;
 
-@Repository
+
 public interface MemberRepository extends JpaRepository<Member,String>{
+
+//	Member findOne(String username);
+
 
 }
